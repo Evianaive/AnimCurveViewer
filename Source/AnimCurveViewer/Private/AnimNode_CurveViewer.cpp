@@ -1,4 +1,4 @@
-﻿// Copyright Evianaive, Inc. All Rights Reserved.
+﻿// Copyright Evianaive. All Rights Reserved.
 
 
 #include "AnimNode_CurveViewer.h"

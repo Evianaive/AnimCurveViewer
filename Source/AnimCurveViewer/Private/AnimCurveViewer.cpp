@@ -1,4 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+// Copyright Evianaive. All Rights Reserved.
 
 #include "AnimCurveViewer.h"
 
