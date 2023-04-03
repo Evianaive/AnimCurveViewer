@@ -1,0 +1,32 @@
+{
+	"EngineVersion": "5.1",
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "AnimCurveViewer",
+	"Description": "This plugin contains an animaiton node that you can view curve value on evaluation when you are debug animation buleprint",
+	"Category": "Animation",
+	"CreatedBy": "Evianaive",
+	"CreatedByURL": "",
+	"DocsURL": "https://github.com/Evianaive/AnimCurveViewer",
+	"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/cb86b550e7bc4a62a1bda5843041a01e",
+	"SupportURL": "https://github.com/Evianaive/AnimCurveViewer",
+	"CanContainContent": false,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "AnimCurveViewer",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"WhitelistPlatforms": ["Win64"]
+		},
+		{
+			"Name": "AnimCurveViewerDeveloper",
+			"Type": "UncookedOnly",
+			"LoadingPhase": "Default",
+			"WhitelistPlatforms": ["Win64"]
+		}
+	]
+}
