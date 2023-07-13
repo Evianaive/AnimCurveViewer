@@ -1,4 +1,4 @@
-﻿// Copyright Evianaive. All Rights Reserved.
+﻿// Copyright 2022-2023 Evianaive. All Rights Reserved.
 
 #pragma once
 
@@ -21,6 +21,9 @@ struct ANIMCURVEVIEWER_API FAnimNode_CurveViewer : public FAnimNode_Base
 	// Curve to view
 	UPROPERTY()
 	TArray<FName> CurveNames;
+	
+	UPROPERTY()
+	TArray<FName> CachedCurveNames;
 	
 	// Whether to log curve value to log
 	UPROPERTY(EditAnywhere, Category = CurveViewer)

@@ -1,4 +1,4 @@
-﻿// Copyright Evianaive. All Rights Reserved.
+﻿// Copyright 2022-2023 Evianaive. All Rights Reserved.
 
 
 #include "AnimNode_CurveViewer.h"
@@ -55,9 +55,12 @@ void FAnimNode_CurveViewer::Evaluate_AnyThread(FPoseContext& Output)
 	}
 	else
 	{
-		for (int32 ModIdx = 0; ModIdx < CurveNames.Num(); ModIdx++)
+		CurveNames.Reset();
+		CurveValues.SetNumUninitialized(CachedCurveNames.Num());
+		for (int32 ModIdx = 0; ModIdx < CachedCurveNames.Num(); ModIdx++)
 		{
-			FName CurveName = CurveNames[ModIdx];
+			const FName& CurveName = CachedCurveNames[ModIdx];
+			CurveNames.Add(CurveName);
 			const SmartName::UID_Type NameUID = Skeleton->GetUIDByName(USkeleton::AnimCurveMappingName, CurveName);
 			if (NameUID != SmartName::MaxUID)
 			{
@@ -98,13 +101,13 @@ void FAnimNode_CurveViewer::Update_AnyThread(const FAnimationUpdateContext& Cont
 void FAnimNode_CurveViewer::AddCurve(const FName& InName, float InValue)
 {
 	CurveValues.Add(InValue);
-	CurveNames.Add(InName);
+	CachedCurveNames.Add(InName);
 }
 
 void FAnimNode_CurveViewer::RemoveCurve(int32 PoseIndex)
 {
 	CurveValues.RemoveAt(PoseIndex);
-	CurveNames.RemoveAt(PoseIndex);
+	CachedCurveNames.RemoveAt(PoseIndex);
 }
 
 #endif // WITH_EDITOR

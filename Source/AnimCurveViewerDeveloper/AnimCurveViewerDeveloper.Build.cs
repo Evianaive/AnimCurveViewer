@@ -1,4 +1,4 @@
-// Copyright Evianaive. All Rights Reserved.
+// Copyright 2022-2023 Evianaive. All Rights Reserved.
 
 using UnrealBuildTool;
 

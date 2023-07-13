@@ -1,4 +1,4 @@
-﻿// Copyright Evianaive. All Rights Reserved.
+﻿// Copyright 2022-2023 Evianaive. All Rights Reserved.
 
 #include "AnimGraphNode_CurveViewer.h"
 #include "Textures/SlateIcon.h"
@@ -112,7 +112,7 @@ TArray<FName> UAnimGraphNode_CurveViewer::GetCurvesToAdd() const
 	{
 		Mapping->FillNameArray(CurvesToAdd);
 
-		for (FName ExistingCurveName : Node.CurveNames)
+		for (FName ExistingCurveName : Node.CachedCurveNames)
 		{
 			CurvesToAdd.RemoveSingleSwap(ExistingCurveName, false);
 		}
@@ -135,7 +135,7 @@ void UAnimGraphNode_CurveViewer::GetAddCurveMenuActions(FMenuBuilder& MenuBuilde
 
 void UAnimGraphNode_CurveViewer::GetRemoveCurveMenuActions(FMenuBuilder& MenuBuilder) const
 {
-	for (FName CurveName : Node.CurveNames)
+	for (FName CurveName : Node.CachedCurveNames)
 	{
 		FUIAction Action = FUIAction(FExecuteAction::CreateUObject(const_cast<UAnimGraphNode_CurveViewer*>(this), &UAnimGraphNode_CurveViewer::RemoveCurvePin, CurveName));
 		MenuBuilder.AddMenuEntry(FText::FromName(CurveName), FText::GetEmpty(), FSlateIcon(), Action);
@@ -182,7 +182,7 @@ void UAnimGraphNode_CurveViewer::GetNodeContextMenuActions(UToolMenu* Menu, UGra
 		}
 
 		// If we have curves to remove, create submenu to offer them
-		if (Node.CurveNames.Num() > 0)
+		if (Node.CachedCurveNames.Num() > 0)
 		{
 			Section.AddSubMenu(
 				"RemoveCurvePin",
@@ -196,7 +196,7 @@ void UAnimGraphNode_CurveViewer::GetNodeContextMenuActions(UToolMenu* Menu, UGra
 void UAnimGraphNode_CurveViewer::RemoveCurvePin(FName CurveName)
 {
 	// Make sure we have a curve pin with that name
-	const int32 CurveIndex = Node.CurveNames.Find(CurveName);
+	const int32 CurveIndex = Node.CachedCurveNames.Find(CurveName);
 	if (CurveIndex != INDEX_NONE)
 	{
 		FScopedTransaction Transaction( LOCTEXT("RemoveCurvePinTrans", "Remove Curve Pin") );
@@ -212,7 +212,7 @@ void UAnimGraphNode_CurveViewer::RemoveCurvePin(FName CurveName)
 void UAnimGraphNode_CurveViewer::AddCurvePin(FName CurveName)
 {
 	// Make sure it doesn't already exist
-	const int32 CurveIndex = Node.CurveNames.Find(CurveName);
+	const int32 CurveIndex = Node.CachedCurveNames.Find(CurveName);
 	if (CurveIndex == INDEX_NONE)
 	{
 		FScopedTransaction Transaction(LOCTEXT("AddCurvePinTrans", "Add Curve Pin"));
@@ -230,9 +230,9 @@ void UAnimGraphNode_CurveViewer::CustomizePinData(UEdGraphPin* Pin, FName Source
 {
 	if (SourcePropertyName == GET_MEMBER_NAME_CHECKED(FAnimNode_CurveViewer, CurveValues))
 	{
-		if (Node.CurveNames.IsValidIndex(ArrayIndex))
+		if (Node.CachedCurveNames.IsValidIndex(ArrayIndex))
 		{
-			Pin->PinFriendlyName = FText::FromName(Node.CurveNames[ArrayIndex]);
+			Pin->PinFriendlyName = FText::FromName(Node.CachedCurveNames[ArrayIndex]);
 		}
 	}
 }
